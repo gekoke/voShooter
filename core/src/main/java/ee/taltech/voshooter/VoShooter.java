@@ -42,7 +42,7 @@ public class VoShooter extends Game {
     public GameState gameState;
     public Screen screen;
 
-    public String HOST_ADDRESS = "193.40.255.29";
+    public String HOST_ADDRESS = "lazycantina.xyz";
     public int PORT_NUMBER = 5001;
 
     public enum Screen {

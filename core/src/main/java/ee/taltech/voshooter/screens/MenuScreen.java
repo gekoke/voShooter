@@ -5,13 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import ee.taltech.voshooter.AppPreferences;
@@ -58,6 +62,13 @@ public class MenuScreen implements Screen {
         TextButton createGame = new TextButton("Create Game", skin);
         TextButton preferences = new TextButton("Settings", skin);
         TextButton exit = new TextButton("Exit", skin);
+        TextField address = new TextField(parent.HOST_ADDRESS, skin);
+        address.setAlignment(Align.center);
+        TextField port = new TextField(String.valueOf(parent.PORT_NUMBER), skin);
+        port.setAlignment(Align.center);
+        address.setTextFieldListener((textField, c) -> parent.HOST_ADDRESS = textField.getText());
+        port.setTextFieldListener((textField, c) -> parent.PORT_NUMBER = Integer.parseInt(textField.getText()));
+        port.setTextFieldFilter((textField, c) -> Character.isDigit(c));
 
         // Add the buttons to the table.
         table.add(joinGame).fillX().uniformX();
@@ -65,8 +76,12 @@ public class MenuScreen implements Screen {
         table.add(createGame).fillX().uniformX();
         table.row().pad(20, 0, 10, 0);
         table.add(preferences).fillX().uniformX();
-        table.row();
+        table.row().pad(40, 0, 40, 0);
         table.add(exit).fillX().uniformX();
+        table.row().pad(60, 0, 10, 0).minWidth(400);
+        table.add(address);
+        table.row().pad(10, 0, 10, 0).minWidth(400);
+        table.add(port);
 
         // Music.
         MusicPlayer.setMusic("soundfx/bensound-evolution.mp3");
