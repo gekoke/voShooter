@@ -12,7 +12,7 @@ www.bensound.com
 ## Server
 To run the server:
 ```sh
-./gradlew core:run
+./gradlew core:run --args="<SERVER_PORT>"  # Default port is 5001
 ```
 
 To build a server jar file:
