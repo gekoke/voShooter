@@ -1,0 +1,108 @@
+buildscript {
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'edu.sc.seis.launch4j:launch4j:2.5.3'
+    }
+}
+
+plugins {
+    id 'jacoco'
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "java"
+    apply plugin: "jacoco"
+
+
+    sourceCompatibility = 1.8
+
+    version = '1.0'
+    ext {
+        appName = "VoShooter"
+        gdxVersion = '1.9.14'
+        roboVMVersion = '2.3.12'
+        box2DLightsVersion = '1.5'
+        ashleyVersion = '1.7.3'
+        aiVersion = '1.8.2'
+        gdxControllersVersion = '2.1.0'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java"
+    apply plugin: 'edu.sc.seis.launch4j'
+
+    launch4j {
+      mainClassName = 'ee.taltech.voshooter.desktop.DesktopLauncher'
+      outfile = 'voshooter.exe'
+    }
+
+    dependencies {
+        implementation project(":core")
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+        implementation "com.esotericsoftware:kryonet:2.22.0-RC1"
+        implementation 'com.badlogicgames.gdx:gdx-backend-headless:1.9.14'
+    }
+
+    jar {
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+    apply plugin: 'edu.sc.seis.launch4j'
+
+    dependencies {
+
+        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        implementation "com.esotericsoftware:kryonet:2.22.0-RC1"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+    }
+
+    launch4j {
+      mainClassName = 'ee.taltech.voshooter.desktop.DesktopLauncher'
+      outfile = 'voshooter-server.exe'
+    }
+
+    jar {
+        manifest {
+            attributes(
+                    'Main-Class': 'ee.taltech.voshooter.networking.server.VoServer'
+            )
+        }
+    }
+}
+
