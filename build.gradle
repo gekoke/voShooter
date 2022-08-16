@@ -93,7 +93,7 @@ project(":core") {
     }
 
     launch4j {
-      mainClassName = 'ee.taltech.voshooter.desktop.DesktopLauncher'
+      mainClassName = 'ee.taltech.voshooter.networking.server.VoServer'
       outfile = 'voshooter-server.exe'
     }
 
