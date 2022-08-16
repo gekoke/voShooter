@@ -7,6 +7,9 @@ Taking inspiration from games like Quake, Counter Strike and others we bring you
 Music from:
 www.bensound.com
 
+# Downloads
+Get the latest game client from the [release section](https://github.com/gekoke/voshooter/releases). Both Windows executables and .jar files are available.
+
 # Building
 
 ## Server
